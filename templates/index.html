@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user.name }}'s Watchlist</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico' )}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+</head>
+<body>
+    <h2>
+        <img class="head" src="{{ url_for('static', filename='head.png') }}">
+        {{ name }}'s Watchlist
+    </h2>
+    <p>{{ movies|length }} Titles</p>
+    <ul class="movie-list">
+        {% for movie in movies %}
+        <li>{{ movie.title }} - {{ movie.year }}</li>
+        {% endfor %}
+    </ul>
+    <img class="rear" src="{{ url_for('static', filename='rear.png') }}">
+</body>
+</html>
