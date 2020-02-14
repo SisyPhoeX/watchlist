@@ -1,22 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ user.name }}'s Watchlist</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico' )}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
-</head>
-<body>
-    <h2>
-        <img class="head" src="{{ url_for('static', filename='head.png') }}">
-        {{ name }}'s Watchlist
-    </h2>
-    <p>{{ movies|length }} Titles</p>
+{% extends 'base.html' %}
+
+{% block content %}
+<p>{{ movies|length }} Titles</p>
+    <form method="post">
+        Name <input type="text" name="title" autocomplete="off" required>
+        Year <input type="text" name="year" autocomplete="off" required>
+        <input class="btn" type="submit" name="submit" value="Add">
+    </form>
     <ul class="movie-list">
         {% for movie in movies %}
-        <li>{{ movie.title }} - {{ movie.year }}</li>
+        <li>{{ movie.title }} - {{ movie.year }}
+            <span class="float-right">
+
+                <a class="btn" href="{{ url_for('edit', movie_id=movie.id)}}">Edit</a>
+                <form class="inline-form" method="post" action="{{ url_for('delete', movie_id=movie.id) }}">
+                    <input class="btn" type="submit" name="delete" value="Delete" onclick="return confirm('Are you sure?')">
+                </form>
+                <a class="imdb" href="https://www.imdb.com/find?q={{ movie.title }}" target="_blank" title="Find this movie on IMDb">IMDb</a>
+                <a class="douban" href="https://movie.douban.com/subject_search?search_text={{ movie.title }}" title="Find this movie on douban">豆瓣</a>
+
+            </span>
+        </li>
         {% endfor %}
     </ul>
     <img class="rear" src="{{ url_for('static', filename='rear.png') }}">
+{% endblock %}
 </body>
 </html>
